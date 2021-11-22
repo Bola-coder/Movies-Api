@@ -1,0 +1,23 @@
+{
+  "name": "moviesapi",
+  "version": "1.0.0",
+  "description": "\"A Simple API to practice what i have learnt\"",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "NodeJs",
+    "Express",
+    "MongoDB",
+    "Mongoose"
+  ],
+  "author": "Ahmed Bolarinwa",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.13",
+    "morgan": "^1.10.0"
+  }
+}
