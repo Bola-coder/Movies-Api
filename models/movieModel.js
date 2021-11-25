@@ -10,6 +10,10 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: [true, "A movie should have a producer"],
   },
+  price: {
+    type: Number,
+    required: [true, "A Movie should have a price"],
+  },
 });
 
 const Movie = mongoose.model("Movie", movieSchema);
