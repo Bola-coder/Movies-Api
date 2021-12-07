@@ -1,6 +1,14 @@
 const Movie = require("./../models/movieModel");
 const ApiFeatures = require("./../utils/apiFeatures");
 
+exports.cheapMovies = (req, res, next) => {
+  req.query.limit = 5;
+  req.query.price = { lte: "1500" };
+  req.query.sort = "price";
+  console.log(req.query);
+  next();
+};
+
 exports.createNewMovie = async (req, res) => {
   try {
     const newMovie = await Movie.create(req.body);

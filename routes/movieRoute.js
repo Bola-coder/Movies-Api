@@ -2,6 +2,10 @@ const express = require("express");
 const movieController = require("./../controllers/movieController");
 
 const router = express.Router();
+
+router
+  .route("/cheap-movies")
+  .get(movieController.cheapMovies, movieController.getAllMovies);
 router
   .route("/")
   .get(movieController.getAllMovies)
