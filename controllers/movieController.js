@@ -108,3 +108,39 @@ exports.deleteMovie = async (req, res) => {
     });
   }
 };
+
+exports.getMovieStats = async (req, res) => {
+  try {
+    const stats = await Movie.aggregate([
+      {
+        $match: { completed: true },
+      },
+      {
+        $group: {
+          _id: "$name",
+        },
+      },
+      {
+        $project: {
+          name: "$_id",
+          releasedSince: { $subtract: [new Date(), "$createdAt"] },
+        },
+      },
+      {
+        $sort: { name: 1 },
+      },
+      {
+        $project: { _id: 0 },
+      },
+    ]);
+    res.status(200).json({
+      status: "success",
+      stats,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "Failed",
+      message: err.message,
+    });
+  }
+};

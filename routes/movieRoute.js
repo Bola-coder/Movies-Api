@@ -6,6 +6,8 @@ const router = express.Router();
 router
   .route("/cheap-movies")
   .get(movieController.cheapMovies, movieController.getAllMovies);
+
+router.route("/movie-stat").get(movieController.getMovieStats);
 router
   .route("/")
   .get(movieController.getAllMovies)
