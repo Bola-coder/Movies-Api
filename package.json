@@ -4,7 +4,8 @@
   "description": "\"A Simple API to practice what i have learnt\"",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "cross-env NODE_ENV=development nodemon server.js",
+    "prod": "cross-env NODE_ENV=production nodemon server.js"
   },
   "keywords": [
     "NodeJs",
