@@ -1,5 +1,6 @@
 const Movie = require("./../models/movieModel");
 const ApiFeatures = require("./../utils/apiFeatures");
+const catchAsync = require("./../utils/catchAsync");
 
 exports.cheapMovies = (req, res, next) => {
   req.query.limit = 5;
@@ -9,7 +10,7 @@ exports.cheapMovies = (req, res, next) => {
   next();
 };
 
-exports.createNewMovie = async (req, res) => {
+exports.createNewMovie = catchAsync(async (req, res, next) => {
   try {
     const newMovie = await Movie.create(req.body);
     res.status(201).json({
@@ -24,9 +25,9 @@ exports.createNewMovie = async (req, res) => {
       message: err,
     });
   }
-};
+});
 
-exports.getAllMovies = async (req, res) => {
+exports.getAllMovies = catchAsync(async (req, res, next) => {
   try {
     // EXECUTING QUERY
     const features = new ApiFeatures(Movie.find(), req.query)
@@ -50,9 +51,9 @@ exports.getAllMovies = async (req, res) => {
       message: err,
     });
   }
-};
+});
 
-exports.getMovie = async (req, res) => {
+exports.getMovie = catchAsync(async (req, res, next) => {
   try {
     const movie = await Movie.findById(req.params.id);
     res.status(200).json({
@@ -67,9 +68,9 @@ exports.getMovie = async (req, res) => {
       message: err,
     });
   }
-};
+});
 
-exports.updateMovie = async (req, res) => {
+exports.updateMovie = catchAsync(async (req, res, next) => {
   try {
     const updatedMovie = await Movie.findByIdAndUpdate(
       req.params.id,
@@ -92,9 +93,9 @@ exports.updateMovie = async (req, res) => {
       message: err,
     });
   }
-};
+});
 
-exports.deleteMovie = async (req, res) => {
+exports.deleteMovie = catchAsync(async (req, res, next) => {
   try {
     await Movie.findByIdAndDelete(req.params.id);
     res.status(204).json({
@@ -107,9 +108,9 @@ exports.deleteMovie = async (req, res) => {
       message: err,
     });
   }
-};
+});
 
-exports.getMovieStats = async (req, res) => {
+exports.getMovieStats = catchAsync(async (req, res, next) => {
   try {
     const stats = await Movie.aggregate([
       {
@@ -143,4 +144,4 @@ exports.getMovieStats = async (req, res) => {
       message: err.message,
     });
   }
-};
+});
