@@ -1,6 +1,7 @@
 const Movie = require("./../models/movieModel");
 const ApiFeatures = require("./../utils/apiFeatures");
 const catchAsync = require("./../utils/catchAsync");
+const AppError = require("./../utils/appError");
 
 exports.cheapMovies = (req, res, next) => {
   req.query.limit = 5;
@@ -41,6 +42,9 @@ exports.getAllMovies = catchAsync(async (req, res, next) => {
 
 exports.getMovie = catchAsync(async (req, res, next) => {
   const movie = await Movie.findById(req.params.id);
+  if (!movie) {
+    return next(new AppError("No movie found with the specified ID", 404));
+  }
   res.status(200).json({
     status: "success",
     data: {
@@ -54,7 +58,10 @@ exports.updateMovie = catchAsync(async (req, res, next) => {
     new: true,
     runValidators: true,
   });
-  console.log(updatedMovie);
+
+  if (!updatedMovie) {
+    return next(new AppError("No movie found with the specified ID", 404));
+  }
   res.status(200).json({
     status: "success",
     data: {
@@ -64,7 +71,10 @@ exports.updateMovie = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteMovie = catchAsync(async (req, res, next) => {
-  await Movie.findByIdAndDelete(req.params.id);
+  const movie = await Movie.findByIdAndDelete(req.params.id);
+  if (!movie) {
+    return next(new AppError("No movie found with the specified ID", 404));
+  }
   res.status(204).json({
     status: "success",
     data: null,
