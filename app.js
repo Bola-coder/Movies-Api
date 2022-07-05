@@ -1,5 +1,6 @@
 const express = require("express");
 const movieRouter = require("./routes/movieRoute");
+const userRouter = require("./routes/userRoute");
 const morgan = require("morgan");
 const AppError = require("./utils/appError");
 const errorHandler = require("./controllers/errorController");
@@ -16,6 +17,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use("/api/v1/movies", movieRouter);
+app.use("/api/v1/users", userRouter);
 
 // Error 404 messgae for undefined routes
 app.all("*", (req, res, next) => {

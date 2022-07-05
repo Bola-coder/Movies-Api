@@ -49,6 +49,7 @@ module.exports = (err, req, res, next) => {
   if (process.env.NODE_ENV === "development") {
     sendErrorDev(err, res);
   } else if (process.env.NODE_ENV === "production") {
+    // let error = { ...err };
     let error = JSON.parse(JSON.stringify(err));
     // Checking for error type and handling errors based on the type
     if (error.name === "CastError") {
