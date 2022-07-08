@@ -1,6 +1,6 @@
 const express = require("express");
 const movieController = require("./../controllers/movieController");
-
+const authController = require("./../controllers/authController");
 const router = express.Router();
 
 router
@@ -10,7 +10,7 @@ router
 router.route("/movie-stat").get(movieController.getMovieStats);
 router
   .route("/")
-  .get(movieController.getAllMovies)
+  .get(authController.protectRoute, movieController.getAllMovies)
   .post(movieController.createNewMovie);
 
 router
