@@ -86,5 +86,19 @@ exports.protectRoute = catchAsync(async (req, res, next) => {
     );
   }
 
+  // Assign current user to the req object
+  req.user = currentUser;
   next();
 });
+
+// Restrict some routes to specific roles
+exports.restrictedTo = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError("You are not authorized to visit this route", 401)
+      );
+    }
+    next();
+  };
+};

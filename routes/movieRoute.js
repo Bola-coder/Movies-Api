@@ -11,11 +11,23 @@ router.route("/movie-stat").get(movieController.getMovieStats);
 router
   .route("/")
   .get(authController.protectRoute, movieController.getAllMovies)
-  .post(movieController.createNewMovie);
+  .post(
+    authController.protectRoute,
+    authController.restrictedTo("admin", "moderator"),
+    movieController.createNewMovie
+  );
 
 router
   .route("/:id")
-  .get(movieController.getMovie)
-  .patch(movieController.updateMovie)
-  .delete(movieController.deleteMovie);
+  .get(authController.protectRoute, movieController.getMovie)
+  .patch(
+    authController.protectRoute,
+    authController.restrictedTo("admin", "moderator"),
+    movieController.updateMovie
+  )
+  .delete(
+    authController.protectRoute,
+    authController.restrictedTo("admin"),
+    movieController.deleteMovie
+  );
 module.exports = router;
